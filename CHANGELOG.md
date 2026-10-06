@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1
+- Author name is now Archdude (in the addon list and the license). No changes to the addon itself.
+
 ## 1.0.0
 - First release.
 - Times every addon at login, with memory use, in a sortable window (`/lp`).
