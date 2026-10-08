@@ -14,6 +14,7 @@ Copy the `!!LoadProfiler` folder to `World of Warcraft\<version>\Interface\AddOn
   - **Group by family** adds up related addons (all `DBM-*`, all `HandyNotes_*`, and so on).
   - **Show Blizzard** includes Blizzard's own modules.
   - **< Older / Newer >** pages through your last 10 sessions, so you can compare before and after turning addons off.
+  - **Right-click an addon** to turn it off for this character, then press **Reload**. Right-click it again to turn it back on. The tooltip lists other addons that need it and won't load either. With Group by family on, a right-click turns off the whole family.
 - `/lp reset` clears the history.
 
 The top of the window splits each login into three parts:

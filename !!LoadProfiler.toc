@@ -8,4 +8,9 @@
 ## Category-enUS: Development Tools
 ## X-License: MIT
 
-LoadProfiler.lua
+Measure.lua
+Format.lua
+Model.lua
+Switch.lua
+Window.lua
+Core.lua
