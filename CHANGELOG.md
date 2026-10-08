@@ -1,10 +1,10 @@
 # Changelog
 
 ## 1.1.0
+- Now works on every current version of WoW, not just Retail: Mists of Pandaria Classic, TBC Anniversary, WoW Forever and Classic Era (including Season of Discovery and Hardcore).
 - Turn addons off right from the list: right-click an addon to turn it off for this character, then press Reload. Right-click it again to turn it back on. With Group by family on, a right-click turns off the whole family. The tooltip warns when other addons need it and won't load either.
 - Search box: type part of a name to show only the addons that match.
 - Fixed: the setup an addon does right after it loads was counted on the next addon to load, so a small addon could show a big time that wasn't its own. It now counts on the addon that did it.
-- Works on every current version of WoW: Retail, Mists of Pandaria Classic, TBC Anniversary, WoW Forever and Classic Era (including Season of Discovery and Hardcore).
 - Behind-the-scenes cleanup.
 
 ## 1.0.1
