@@ -45,10 +45,41 @@ SlashCmdList.LOADPROFILER = function(msg)
 	end
 end
 
+-- Two listeners time each ADDON_LOADED: `events` hears it first (it registered
+-- before any other addon loaded) and `tail` hears it after every other addon's
+-- handler. Frames hear an event in the order they registered for it, so
+-- whenever another frame registers for ADDON_LOADED, tail registers again to
+-- stay last. If it ever isn't last, that addon is simply timed without its setup.
+local tail = CreateFrame("Frame")
+local measuring, moving = true, false
+
+local function keepTailLast(frame, event)
+	if not measuring or moving or event ~= "ADDON_LOADED" or frame == tail then return end
+	moving = true
+	tail:UnregisterEvent("ADDON_LOADED")
+	tail:RegisterEvent("ADDON_LOADED")
+	moving = false
+end
+
+-- Widget kinds addons register events on. Each kind has its own method table.
+local hooked = {}
+for _, kind in ipairs({ "Frame", "Button", "CheckButton", "StatusBar", "ScrollFrame", "Slider" }) do
+	local methods = getmetatable(CreateFrame(kind)).__index
+	if type(methods) == "table" and not hooked[methods] then
+		hooked[methods] = true
+		hooksecurefunc(methods, "RegisterEvent", keepTailLast)
+	end
+end
+
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:RegisterEvent("PLAYER_LOGIN")
 events:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+tail:RegisterEvent("ADDON_LOADED")
+tail:SetScript("OnEvent", function()
+	Measure.SetupDone(Measure.Now())
+end)
 events:SetScript("OnEvent", function(self, event, ...)
 	local now = Measure.Now()
 	if event == "ADDON_LOADED" then
@@ -63,6 +94,8 @@ events:SetScript("OnEvent", function(self, event, ...)
 		Measure.Login(now)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		self:UnregisterAllEvents()
+		measuring = false
+		tail:UnregisterAllEvents()
 		local isInitialLogin, isReload = ...
 		local session = Measure.Finish(now, isInitialLogin, isReload)
 		C_Timer.After(SUMMARY_DELAY, function() printSummary(session) end)

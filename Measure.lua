@@ -20,6 +20,7 @@ local lastMark = startTime    -- when the previous addon finished, or our own ha
 local lastAddonAt = startTime -- when the last addon finished loading
 local loginAt                 -- when PLAYER_LOGIN fired
 local rows = {}               -- this login's addons, in load order
+local current                 -- the row whose ADDON_LOADED handlers are still running
 
 local function round1(ms)
 	return math.floor(ms * 10 + 0.5) / 10
@@ -29,15 +30,27 @@ end
 function Measure.AddonLoaded(name, now)
 	-- t = when it finished (ms since we started); late = loaded after PLAYER_LOGIN,
 	-- in which case the gap before it also covers the game's own world loading.
-	rows[#rows + 1] = {
+	current = {
 		n = name, ms = now - lastMark, t = round1(now - startTime),
 		b = name:find("^Blizzard_") and true or nil, late = loginAt and true or nil,
 	}
+	rows[#rows + 1] = current
 	lastAddonAt = now
 end
 
 -- Restarts the clock after our own event handler, so its cost isn't counted.
 function Measure.Restart()
+	lastMark = clock()
+end
+
+-- Every other ADDON_LOADED handler has run. That's mostly the addon setting
+-- itself up now that it's loaded, so the time counts on it; otherwise it would
+-- land on the next addon to load.
+function Measure.SetupDone(now)
+	if current then
+		current.ms = current.ms + (now - lastMark)
+		current = nil
+	end
 	lastMark = clock()
 end
 

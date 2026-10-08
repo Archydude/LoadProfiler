@@ -11,6 +11,7 @@ Copy the `!!LoadProfiler` folder to `World of Warcraft\<version>\Interface\AddOn
 - Log in. A few seconds later, chat shows the total load time and the 5 slowest addons.
 - `/lp` opens the full list:
   - Load time and memory for every addon, slowest first.
+  - **Search** shows only addons whose name contains what you type.
   - **Group by family** adds up related addons (all `DBM-*`, all `HandyNotes_*`, and so on).
   - **Show Blizzard** includes Blizzard's own modules.
   - **< Older / Newer >** pages through your last 10 sessions, so you can compare before and after turning addons off.
@@ -24,7 +25,7 @@ The top of the window splits each login into three parts:
 
 ## Tips for accurate numbers
 - **Compare cold logins, not `/reload`.** A reload reads cached files and is much faster. The window labels each session as "Cold login" or "/reload".
-- **Some setup time shows on the next addon.** Many addons do their heavy setup the moment they finish loading. That time is counted on the addon that loads after them. If a tiny addon shows a big number, look at the one just before it in load order (that's alphabetical, plus dependencies).
+- **An addon's time includes its setup.** Many addons do their heavy setup the moment they finish loading, and that counts on them.
 - **Login init can't be split per addon.** The game gives no way to see whose startup code ran when.
 - Blizzard modules with a huge time are marked "mostly game loading". That gap is the world loading, not the module.
 - Load Profiler's own cost is well under a millisecond.

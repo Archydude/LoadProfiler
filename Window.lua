@@ -9,7 +9,7 @@ local Window = {}
 ns.Window = Window
 
 -- Layout
-local WINDOW_WIDTH, WINDOW_HEIGHT = 520, 500
+local WINDOW_WIDTH, WINDOW_HEIGHT = 520, 528
 local ROW_HEIGHT = 16
 local LIST_WIDTH = 460    -- the scrolling list
 local BAR_WIDTH = 456     -- the slowest entry's bar; the rest scale to it
@@ -17,8 +17,10 @@ local NAME_WIDTH = 280    -- "Addon" column
 local TIME_X, MEMORY_X = 290, 375
 local NUMBER_WIDTH = 80   -- "Load time" and "Memory" columns
 local OPTIONS_Y = -78     -- the checkboxes
-local HEADER_Y = -108     -- column headers
-local LIST_TOP = -124
+local SEARCH_Y = -106     -- the search box
+local SEARCH_WIDTH = 220
+local HEADER_Y = -136     -- column headers
+local LIST_TOP = -152
 local FOOTER_HEIGHT = 40  -- hint and Reload button under the list
 
 -- Load time bars: red from SLOW_MS, orange from MEDIUM_MS, blue below.
@@ -150,6 +152,7 @@ function Window.Refresh()
 		ui.line1:SetText("No data yet. Log out and back in to record a session.")
 		ui.line2:SetText("")
 		ui.line3:SetText("")
+		ui.matches:SetText("")
 		for _, row in ipairs(rowFrames) do row:Hide() end
 		return
 	end
@@ -162,8 +165,19 @@ function Window.Refresh()
 		and "|cff888888A /reload reads cached files and is faster. Compare cold logins for real numbers.|r"
 		or "|cff888888Login init = all addons' startup code after loading, combined (can't be split per addon).|r")
 
-	local list = Model.Entries(s, ns.opts)
-	local max = (list[1] and list[1].ms > 0) and list[1].ms or 1
+	-- Bars keep the full list's scale while searching.
+	local all = Model.Entries(s, ns.opts)
+	local query = strtrim(ui.search:GetText() or "")
+	local list = query ~= "" and Model.Entries(s, ns.opts, query) or all
+	if query == "" then
+		ui.matches:SetText("")
+	elseif #list == 0 then
+		ui.matches:SetText("No matches")
+	else
+		ui.matches:SetText(format("Showing %d of %d", #list, #all))
+	end
+
+	local max = (all[1] and all[1].ms > 0) and all[1].ms or 1
 	for i, e in ipairs(list) do
 		drawRow(getRow(i), e, max)
 	end
@@ -224,6 +238,31 @@ local function create()
 	f.prev:SetPoint("RIGHT", f.next, "LEFT", -4, 0)
 	f.prev:SetText("< Older")
 	f.prev:SetScript("OnClick", function() viewIndex = viewIndex + 1; Window.Refresh() end)
+
+	-- SearchBoxTemplate gives the magnifier and clear button; fall back to a plain
+	-- input box on any client that doesn't have it.
+	local ok, box = pcall(CreateFrame, "EditBox", nil, f, "SearchBoxTemplate")
+	local plain = not (ok and box)
+	if plain then
+		box = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
+		box.Instructions = box:CreateFontString(nil, "ARTWORK", "GameFontDisable")
+		box.Instructions:SetPoint("LEFT", box, "LEFT", 2, 0)
+	end
+	box.Instructions:SetText("Search addons")
+	box.Instructions:SetFontObject("GameFontDisable")
+	box:SetFontObject("GameFontHighlight")
+	box:SetSize(SEARCH_WIDTH, 20)
+	box:SetPoint("TOPLEFT", 20, SEARCH_Y)
+	box:SetAutoFocus(false)
+	box:HookScript("OnTextChanged", function(self)
+		if plain then self.Instructions:SetShown((self:GetText() or "") == "") end
+		Window.Refresh()
+	end)
+	box:HookScript("OnEnterPressed", function(self) self:ClearFocus() end)
+	f.search = box
+
+	f.matches = f:CreateFontString(nil, "OVERLAY", "GameFontDisable")
+	f.matches:SetPoint("LEFT", box, "RIGHT", 12, 0)
 
 	local function header(text, x, width, justify)
 		local h = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")

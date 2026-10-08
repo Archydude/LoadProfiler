@@ -18,10 +18,13 @@ end
 
 -- The window's list for session s: one entry per addon, or per family when
 -- opts.group is on; Blizzard modules only when opts.blizz is on. Slowest first.
-function Model.Entries(s, opts)
+-- With a query, only addons whose name contains it (any case) are listed, and
+-- families add up just those.
+function Model.Entries(s, opts, query)
+	query = query and query ~= "" and query:lower() or nil
 	local list, groups = {}, {}
 	for _, r in ipairs(s.rows) do
-		if opts.blizz or not r.b then
+		if (opts.blizz or not r.b) and (not query or r.n:lower():find(query, 1, true)) then
 			if opts.group then
 				local key = Model.FamilyOf(r)
 				local g = groups[key]

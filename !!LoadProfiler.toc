@@ -2,7 +2,7 @@
 ## Title: Load Profiler
 ## Notes: Times how long each addon takes to load at login, so you can see what makes your loading screen slow. Type /lp to view.
 ## Author: Archdude
-## Version: 1.0.1
+## Version: 1.1.0
 ## SavedVariables: LoadProfilerDB
 ## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
 ## Category-enUS: Development Tools
