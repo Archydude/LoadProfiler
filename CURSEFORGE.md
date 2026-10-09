@@ -61,6 +61,8 @@ Tip: to see how fast WoW loads with no addons, log in once with only Load Profil
 - **Startup code can't be split per addon.** The game gives no way to see whose code ran when, so that part is shown as one total.
 
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
+
+**Feedback and bug reports are welcome** in the comments.
 ```
 ---
 
