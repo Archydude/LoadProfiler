@@ -3,19 +3,26 @@
 local ADDON_NAME, ns = ...
 
 local format = string.format
-local Format, Measure, Model, Window = ns.Format, ns.Measure, ns.Model, ns.Window
+local Format, Measure, MinimapButton, Model, Options, Window =
+	ns.Format, ns.Measure, ns.MinimapButton, ns.Model, ns.Options, ns.Window
 
 local SUMMARY_DELAY = 3 -- seconds after entering the world before the chat summary
 local SUMMARY_COUNT = 5 -- slowest addons named in it
 
-local DEFAULT_OPTS = { group = false, blizz = false }
+ns.DEFAULT_OPTS = {
+	group = false,      -- window: group by addon family
+	blizz = false,      -- window: show Blizzard modules
+	minimap = true,     -- minimap button
+	summary = true,     -- chat summary after each login
+	-- minimapIcon: the minimap button's position, made at login and kept by LibDBIcon
+}
 
 local function loadSettings()
 	LoadProfilerDB = LoadProfilerDB or {}
 	local db = LoadProfilerDB
 	db.sessions = db.sessions or {}
 	db.opts = db.opts or {}
-	for key, value in pairs(DEFAULT_OPTS) do
+	for key, value in pairs(ns.DEFAULT_OPTS) do
 		if db.opts[key] == nil then db.opts[key] = value end
 	end
 	ns.db, ns.opts = db, db.opts
@@ -32,14 +39,23 @@ local function printSummary(s)
 		#parts > 0 and table.concat(parts, ", ") or "none"))
 end
 
+-- /lp reset, and Clear in the options.
+function ns.ClearHistory()
+	wipe(ns.db.sessions)
+	Window.Reset()
+	print("|cffff9933Load Profiler:|r history cleared.")
+end
+
 SLASH_LOADPROFILER1 = "/lp"
 SLASH_LOADPROFILER2 = "/loadprofiler"
 SlashCmdList.LOADPROFILER = function(msg)
 	msg = strtrim((msg or ""):lower())
 	if msg == "reset" then
-		wipe(ns.db.sessions)
-		Window.Reset()
-		print("|cffff9933Load Profiler:|r history cleared.")
+		ns.ClearHistory()
+	elseif msg == "minimap" then
+		MinimapButton.Toggle()
+	elseif msg == "options" or msg == "config" then
+		Options.Open()
 	else
 		Window.Toggle()
 	end
@@ -92,12 +108,16 @@ events:SetScript("OnEvent", function(self, event, ...)
 		Measure.Restart()
 	elseif event == "PLAYER_LOGIN" then
 		Measure.Login(now)
+		MinimapButton.Create()
+		Options.Create()
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		self:UnregisterAllEvents()
 		measuring = false
 		tail:UnregisterAllEvents()
 		local isInitialLogin, isReload = ...
 		local session = Measure.Finish(now, isInitialLogin, isReload)
-		C_Timer.After(SUMMARY_DELAY, function() printSummary(session) end)
+		if ns.opts.summary then
+			C_Timer.After(SUMMARY_DELAY, function() printSummary(session) end)
+		end
 	end
 end)

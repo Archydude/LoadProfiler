@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+- Minimap button: click it to open the list, hover it for the last login's slowest addons, right-click it for the options. Drag it around the minimap; it works with minimap button collectors. On Retail, Load Profiler is also in the minimap's addon menu.
+- Options page (right-click the minimap button, type /lp options, or Esc > Options > AddOns > Load Profiler): show or hide the minimap button (/lp minimap does it too), put it back where it started, turn the chat summary after each login on or off, and clear the saved logins.
+
 ## 1.1.0
 - Now works on every current version of WoW, not just Retail: Mists of Pandaria Classic, TBC Anniversary, WoW Forever and Classic Era (including Season of Discovery and Hardcore).
 - Turn addons off right from the list: right-click an addon to turn it off for this character, then press Reload. Right-click it again to turn it back on. With Group by family on, a right-click turns off the whole family. The tooltip warns when other addons need it and won't load either.

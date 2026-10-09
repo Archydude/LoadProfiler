@@ -9,7 +9,8 @@ Copy the `!!LoadProfiler` folder to `World of Warcraft\<version>\Interface\AddOn
 
 ## Use
 - Log in. A few seconds later, chat shows the total load time and the 5 slowest addons.
-- `/lp` opens the full list:
+- `/lp`, or the pocket watch button on the minimap, opens the full list. Hover the button for the last login's slowest addons, right-click it for the options, and drag it to move it. On Retail, Load Profiler is also in the minimap's addon menu.
+- The full list:
   - Load time and memory for every addon, slowest first.
   - **Search** shows only addons whose name contains what you type.
   - **Group by family** adds up related addons (all `DBM-*`, all `HandyNotes_*`, and so on).
@@ -22,6 +23,16 @@ The top of the window splits each login into three parts:
 - **Addons loading**: running all addons' files and reading their saved data.
 - **Login init**: all addons' startup code after loading, combined.
 - **Game itself**: everything else (loading the world and your character). No addon can speed this up. To see your game's floor, log in once with only Load Profiler enabled.
+
+## Options
+Right-click the minimap button, type `/lp options`, or go to **Esc → Options → AddOns → Load Profiler**.
+
+| Option | What it does |
+|---|---|
+| Show minimap button | On by default. `/lp minimap` also hides or shows it. |
+| Minimap button position: Reset | Puts the button back where it started. |
+| Chat summary | On by default. The total load time and the 5 slowest addons in chat after each login. |
+| Saved logins: Clear | Forgets all saved logins, like `/lp reset`. |
 
 ## Tips for accurate numbers
 - **Compare cold logins, not `/reload`.** A reload reads cached files and is much faster. The window labels each session as "Cold login" or "/reload".

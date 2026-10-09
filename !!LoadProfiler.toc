@@ -2,15 +2,24 @@
 ## Title: Load Profiler
 ## Notes: Times how long each addon takes to load at login, so you can see what makes your loading screen slow. Type /lp to view.
 ## Author: Archdude
-## Version: 1.1.0
+## Version: 1.2.0
 ## SavedVariables: LoadProfilerDB
 ## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
+## AddonCompartmentFunc: LoadProfiler_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: LoadProfiler_OnAddonCompartmentEnter
+## AddonCompartmentFuncOnLeave: LoadProfiler_OnAddonCompartmentLeave
 ## Category-enUS: Development Tools
 ## X-License: MIT
 
 Measure.lua
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Format.lua
 Model.lua
 Switch.lua
 Window.lua
+Minimap.lua
+Options.lua
 Core.lua
