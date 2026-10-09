@@ -10,6 +10,7 @@
 ## AddonCompartmentFuncOnLeave: LoadProfiler_OnAddonCompartmentLeave
 ## Category-enUS: Development Tools
 ## X-License: MIT
+## X-Curse-Project-ID: 1723710
 
 Measure.lua
 Libs\LibStub\LibStub.lua
