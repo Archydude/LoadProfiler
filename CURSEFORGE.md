@@ -13,7 +13,7 @@ Load Profiler
 
 **Summary**
 ```
-Find out which addons make your loading screen slow. Times every addon at login, with memory use.
+See which addons slow your loading screen and which ones make the game stutter while you play.
 ```
 
 **Main category:** `Development Tools`
@@ -27,38 +27,35 @@ Find out which addons make your loading screen slow. Times every addon at login,
 
 ---
 ```markdown
-## Why is my loading screen so slow?
+## Why is my game slow?
 
-Load Profiler answers that. It times every addon as it loads at login and shows a ranked list, slowest first, with each addon's memory use.
+Load Profiler shows which addons make your loading screen slow and which ones make the game stutter while you play, each as a ranked list, slowest first.
 
-### Features
-- **Load time and memory for every addon**, sorted slowest first, with colored bars.
-- **Login split into three parts:** addons loading, addons' startup code, and the game's own loading. You see how much of your loading screen your addons actually cost.
-- **Search** the list by addon name.
-- **Turn addons off right from the list:** right-click a slow addon to turn it off for this character, then reload. It warns you when other addons need it.
-- **Group by family:** add up related addons (all DBM modules, all HandyNotes plugins...).
-- **History:** keeps your last 10 logins, so you can compare before and after turning addons off.
-- **Chat summary** of the 5 slowest addons after each login (can be turned off).
-- **Minimap button:** click for the list, hover for the last login's slowest addons, right-click for options. Works with minimap button collectors.
-- Practically free: its own cost is under a millisecond.
+### Loading screen
+- **Load time and memory for every addon**, slowest first.
+- **Login split into three parts:** addons loading, addons' startup code, and the game's own loading, so you see what your addons actually cost.
+- **History** of your last 10 logins, to compare before and after turning addons off.
+- **Chat summary** of the 5 slowest addons after each login.
+
+### While playing
+- **Every addon's time per frame**, how many frames it alone took over 10 ms (likely a lost frame) and over 50 ms (a stutter you can see), and its worst frame.
+- **All addons together:** how many frames took over 50 ms, and in how many of them your addons together took over 50 ms.
+- **The session you're playing updates live.** Play sessions are saved when you log out, and every boss fight is saved on its own, kill or wipe.
+- Loading screens aren't counted.
+
+### Both lists
+- **Search** by addon name, and **group by family** (all DBM modules, all HandyNotes plugins...).
+- **Turn addons off right from the list:** right-click one to turn it off for this character, then reload. It warns you when other addons need it.
+- **Minimap button:** click for the window, hover for the last login's slowest addons, right-click for options. Works with minimap button collectors.
 
 ### How to use
-1. Log in. Chat shows your total addon load time and the slowest addons.
-2. Click the minimap button or type **/lp** to see the full list.
-3. Right-click what you don't need on that character to turn it off, log in again and compare.
-
-Tip: to see how fast WoW loads with no addons, log in once with only Load Profiler enabled.
-
-### Commands
-- **/lp**: open or close the window
-- **/lp reset**: clear the history
-- **/lp minimap**: hide or show the minimap button
-- **/lp options**: open the options
+1. Log in. Chat shows your total load time and the slowest addons.
+2. Type **/lp** or click the minimap button. Play for a while, then open the While playing tab.
+3. Right-click what you don't need, reload and compare.
 
 ### Good to know
-- **Compare cold logins, not /reload.** A reload reads cached files and is much faster. Each session is labeled.
-- **An addon's time includes its setup.** Many addons do heavy setup right after they load, and that counts on them.
-- **Startup code can't be split per addon.** The game gives no way to see whose code ran when, so that part is shown as one total.
+- **Compare cold logins, not /reload.** A reload reads cached files and loads much faster.
+- **While playing counts each addon on its own.** Several slightly slow addons can still add up to a stutter, and the all-addons line catches that.
 
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
 
@@ -70,11 +67,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\LoadProfiler-1.2.0.zip`
+**File:** `dist\LoadProfiler-1.3.0.zip`
 
 **Display name**
 ```
-Load Profiler 1.2.0
+Load Profiler 1.3.0
 ```
 
 **Release type:** `Release`
@@ -86,18 +83,14 @@ Load Profiler 1.2.0
 - WoW Forever: `1.60.1` (if CurseForge lists it yet)
 - Classic Era: `1.15.9` (covers Season of Discovery and Hardcore)
 
-**Changelog** (paste only the newest part; 1.0.0 and 1.0.1 are already on CurseForge, so paste 1.1.0 too if it never went up)
+**Changelog** (paste only the newest part)
 ```markdown
-1.2.0
-- Minimap button: click it to open the list, hover it for the last login's slowest addons, right-click it for the options. Drag it around the minimap; it works with minimap button collectors. On Retail, Load Profiler is also in the minimap's addon menu.
-- Options page (right-click the minimap button, type /lp options, or Esc > Options > AddOns > Load Profiler): show or hide the minimap button (/lp minimap does it too), put it back where it started, turn the chat summary after each login on or off, and clear the saved logins.
-
-1.1.0
-- Now works on every current version of WoW, not just Retail: Mists of Pandaria Classic, TBC Anniversary, WoW Forever and Classic Era (including Season of Discovery and Hardcore).
-- Turn addons off right from the list: right-click an addon to turn it off for this character, then press Reload. Right-click it again to turn it back on. With Group by family on, a right-click turns off the whole family. The tooltip warns when other addons need it and won't load either.
-- Search box: type part of a name to show only the addons that match.
-- Fixed: the setup an addon does right after it loads was counted on the next addon to load, so a small addon could show a big time that wasn't its own. It now counts on the addon that did it.
-- Behind-the-scenes cleanup.
+1.3.0
+- New While playing tab: see which addons make the game stutter. For every addon, its average time per frame, how many frames it took over 10 ms and over 50 ms by itself, and its worst frame. Click a column header to sort by it, and hover an addon for its counts at every frame time.
+- The top of the tab shows how long you played, all addons' time per frame and their share of the game's time, and how many frames took over 50 ms, with how many of those all addons together caused.
+- The session you're playing updates live. Each play session is saved when you log out or reload, and each boss fight is saved on its own, marked kill or wipe. < Older goes back through the last 10 play sessions and 20 boss fights. Loading screens aren't counted.
+- Bigger text in the window, so the list is easier to read. The window is a little larger to fit it.
+- /lp reset and Clear in the options now clear both tabs' history.
 ```
 
 **Related projects:** none.

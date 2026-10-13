@@ -1,8 +1,8 @@
 ## Interface: 120100, 120105, 50504, 20505, 20506, 16001, 11509
 ## Title: Load Profiler
-## Notes: Times how long each addon takes to load at login, so you can see what makes your loading screen slow. Type /lp to view.
+## Notes: Shows which addons make your loading screen slow and which ones make the game stutter while you play. Type /lp to view.
 ## Author: Archdude
-## Version: 1.2.0
+## Version: 1.3.0
 ## SavedVariables: LoadProfilerDB
 ## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
 ## AddonCompartmentFunc: LoadProfiler_OnAddonCompartmentClick
@@ -19,6 +19,7 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Format.lua
 Model.lua
+Play.lua
 Switch.lua
 Window.lua
 Minimap.lua

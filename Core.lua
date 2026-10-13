@@ -3,8 +3,8 @@
 local ADDON_NAME, ns = ...
 
 local format = string.format
-local Format, Measure, MinimapButton, Model, Options, Window =
-	ns.Format, ns.Measure, ns.MinimapButton, ns.Model, ns.Options, ns.Window
+local Format, Measure, MinimapButton, Model, Options, Play, Window =
+	ns.Format, ns.Measure, ns.MinimapButton, ns.Model, ns.Options, ns.Play, ns.Window
 
 local SUMMARY_DELAY = 3 -- seconds after entering the world before the chat summary
 local SUMMARY_COUNT = 5 -- slowest addons named in it
@@ -21,6 +21,7 @@ local function loadSettings()
 	LoadProfilerDB = LoadProfilerDB or {}
 	local db = LoadProfilerDB
 	db.sessions = db.sessions or {}
+	db.play = db.play or {}
 	db.opts = db.opts or {}
 	for key, value in pairs(ns.DEFAULT_OPTS) do
 		if db.opts[key] == nil then db.opts[key] = value end
@@ -42,6 +43,7 @@ end
 -- /lp reset, and Clear in the options.
 function ns.ClearHistory()
 	wipe(ns.db.sessions)
+	wipe(ns.db.play)
 	Window.Reset()
 	print("|cffff9933Load Profiler:|r history cleared.")
 end
@@ -116,6 +118,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 		tail:UnregisterAllEvents()
 		local isInitialLogin, isReload = ...
 		local session = Measure.Finish(now, isInitialLogin, isReload)
+		Play.Start(session.rows)
 		if ns.opts.summary then
 			C_Timer.After(SUMMARY_DELAY, function() printSummary(session) end)
 		end

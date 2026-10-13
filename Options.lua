@@ -66,8 +66,8 @@ function Options.Create()
 		"A few seconds after you log in, chat shows the total load time and the 5 slowest addons.")
 
 	header("History")
-	button("Saved logins", "Clear", ns.ClearHistory,
-		"Forget all saved logins. The next login starts a new list.")
+	button("Saved history", "Clear", ns.ClearHistory,
+		"Forget all saved logins, play sessions and boss fights. The next login starts a new list.")
 
 	Settings.RegisterAddOnCategory(category)
 end
