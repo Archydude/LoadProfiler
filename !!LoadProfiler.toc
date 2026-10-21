@@ -3,7 +3,7 @@
 ## Notes: Shows which addons make your loading screen slow and which ones make the game stutter while you play. Type /lp to view.
 ## Author: Archdude
 ## Version: 1.3.0
-## SavedVariables: LoadProfilerDB
+## SavedVariables: LoadProfilerDB, LoadProfilerWhatsNew
 ## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
 ## AddonCompartmentFunc: LoadProfiler_OnAddonCompartmentClick
 ## AddonCompartmentFuncOnEnter: LoadProfiler_OnAddonCompartmentEnter
@@ -25,3 +25,5 @@ Window.lua
 Minimap.lua
 Options.lua
 Core.lua
+WhatsNew.lua
+WhatsNewData.lua
