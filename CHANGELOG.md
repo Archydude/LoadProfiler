@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+- After an update, a What's New window shows what changed since the version you had. Tick **Don't show this after updates** to stop it opening, for all the addons that use it. Type **/whatsnew** to see the latest changes, or to turn it back on.
+- Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'". The Reset and Clear buttons no longer come up in that search; they're still on Load Profiler's options page.
+
 ## 1.3.0
 - New **While playing** tab: see which addons make the game stutter. For every addon, its average time per frame, how many frames it took over 10 ms and over 50 ms by itself, and its worst frame. Click a column header to sort by it, and hover an addon for its counts at every frame time.
 - The top of the tab shows how long you played, all addons' time per frame and their share of the game's time, and how many frames took over 50 ms, with how many of those all addons together caused.

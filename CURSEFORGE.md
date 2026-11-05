@@ -56,6 +56,7 @@ Load Profiler shows which addons make your loading screen slow and which ones ma
 ### Good to know
 - **Compare cold logins, not /reload.** A reload reads cached files and loads much faster.
 - **While playing counts each addon on its own.** Several slightly slow addons can still add up to a stutter, and the all-addons line catches that.
+- After an update, a What's New window shows what changed.
 
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
 
@@ -67,11 +68,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\LoadProfiler-1.3.0.zip`
+**File:** `dist\LoadProfiler-1.4.0.zip`
 
 **Display name**
 ```
-Load Profiler 1.3.0
+Load Profiler 1.4.0
 ```
 
 **Release type:** `Release`
@@ -85,12 +86,9 @@ Load Profiler 1.3.0
 
 **Changelog** (paste only the newest part)
 ```markdown
-1.3.0
-- New While playing tab: see which addons make the game stutter. For every addon, its average time per frame, how many frames it took over 10 ms and over 50 ms by itself, and its worst frame. Click a column header to sort by it, and hover an addon for its counts at every frame time.
-- The top of the tab shows how long you played, all addons' time per frame and their share of the game's time, and how many frames took over 50 ms, with how many of those all addons together caused.
-- The session you're playing updates live. Each play session is saved when you log out or reload, and each boss fight is saved on its own, marked kill or wipe. < Older goes back through the last 10 play sessions and 20 boss fights. Loading screens aren't counted.
-- Bigger text in the window, so the list is easier to read. The window is a little larger to fit it.
-- /lp reset and Clear in the options now clear both tabs' history.
+1.4.0
+- After an update, a What's New window shows what changed since the version you had. Tick **Don't show this after updates** to stop it opening, for all the addons that use it. Type **/whatsnew** to see the latest changes, or to turn it back on.
+- Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'". The Reset and Clear buttons no longer come up in that search; they're still on Load Profiler's options page.
 ```
 
 **Related projects:** none.

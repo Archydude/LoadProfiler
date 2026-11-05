@@ -27,6 +27,7 @@ Copy the `!!LoadProfiler` folder to `World of Warcraft\<version>\Interface\AddOn
   - The first entry is the session you're playing, and it updates live. **< Older** goes back through your last 10 play sessions and 20 boss fights, each fight saved on its own with kill or wipe.
   - Loading screens aren't counted, so a zone change doesn't show up as a stutter.
 - `/lp reset` clears the history of both tabs.
+- After an update, a What's New window shows what changed since the version you had. Tick **Don't show this after updates** in it to stop it opening, for all the addons that use it. `/whatsnew` shows the latest changes any time, and turns it back on.
 
 The top of the window splits each login into three parts:
 - **Addons loading**: running all addons' files and reading their saved data.

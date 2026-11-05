@@ -50,8 +50,12 @@ function Options.Create()
 		Settings.CreateCheckbox(category, s, tooltip)
 	end
 
+	-- No search tags (the last argument, false). Tags added from addon code are tainted, and
+	-- the options search box reads every page's tags unprotected, so the whole search turns
+	-- tainted and Blizzard's Discord button in the results gets blocked
+	-- (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
 	local function button(label, text, onClick, tooltip)
-		layout:AddInitializer(CreateSettingsButtonInitializer(label, text, onClick, tooltip, true))
+		layout:AddInitializer(CreateSettingsButtonInitializer(label, text, onClick, tooltip, false))
 	end
 
 	header("Minimap")
