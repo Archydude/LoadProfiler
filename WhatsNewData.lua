@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("!!LoadProfiler", {
 	title = "Load Profiler",
 	icon = "Interface\\Icons\\INV_Misc_PocketWatch_01",
-	version = "1.4.0",
+	version = "1.4.1",
 	seen = "LoadProfilerWhatsNew",
 	saved = { "LoadProfilerDB" },
 	changes = {
+		{ "1.4.1",
+			"Fixed an error when opening the options during combat (\"tried to call the protected function 'OpenSettingsPanel()'\"). The options now open as soon as the fight ends.",
+		},
 		{ "1.4.0",
 			"After an update, a What's New window shows what changed since the version you had. Tick |cffffd100Don't show this after updates|r to stop it opening, for all the addons that use it. Type |cffffd100/whatsnew|r to see the latest changes, or to turn it back on.",
 			"Fixed: typing in the search box of the game's options (Esc > Options) could show the error \"AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'\". The Reset and Clear buttons no longer come up in that search; they're still on Load Profiler's options page.",
