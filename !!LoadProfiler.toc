@@ -23,6 +23,7 @@ Play.lua
 Switch.lua
 Window.lua
 Minimap.lua
+Options.xml
 Options.lua
 Core.lua
 WhatsNew.lua

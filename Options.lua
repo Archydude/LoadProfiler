@@ -65,15 +65,23 @@ function Options.Create()
 			VarType.Boolean, name, ns.DEFAULT_OPTS[key])
 		s:SetValueChangedCallback(function() Options.Changed(key) end)
 		settings[key] = s
-		Settings.CreateCheckbox(category, s, tooltip)
+		-- Like Settings.CreateCheckbox, but on our own row template (see Options.xml). On
+		-- Blizzard's templates, a row that drew one of our settings is later reused for
+		-- Blizzard's own, which then can't call protected functions: its Discord dropdown and
+		-- button get blocked (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
+		layout:AddInitializer(Settings.CreateControlInitializer("LoadProfilerSettingsCheckboxTemplate", s, nil, tooltip))
 	end
 
-	-- No search tags (the last argument, false). Tags added from addon code are tainted, and
-	-- the options search box reads every page's tags unprotected, so the whole search turns
-	-- tainted and Blizzard's Discord button in the results gets blocked
-	-- (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
+	-- Also on our own row template, and with no search tags. Tags added from addon code are
+	-- tainted, and the options search box reads every page's tags unprotected, so the whole
+	-- search turns tainted and Blizzard's Discord button in the results gets blocked.
 	local function button(label, text, onClick, tooltip)
-		layout:AddInitializer(CreateSettingsButtonInitializer(label, text, onClick, tooltip, false))
+		layout:AddInitializer(Settings.CreateElementInitializer("LoadProfilerSettingsButtonTemplate", {
+			name = label,
+			buttonText = text,
+			buttonClick = onClick,
+			tooltip = tooltip,
+		}))
 	end
 
 	header("Minimap")
