@@ -68,11 +68,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\LoadProfiler-1.4.1.zip`
+**File:** `dist\LoadProfiler-1.4.2.zip`
 
 **Display name**
 ```
-Load Profiler 1.4.1
+Load Profiler 1.4.2
 ```
 
 **Release type:** `Release`
@@ -86,6 +86,9 @@ Load Profiler 1.4.1
 
 **Changelog** (paste only the newest part)
 ```markdown
+1.4.2
+- Fixed: after you opened Load Profiler's options, the game's own options could show the error "AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'".
+
 1.4.1
 - Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
 

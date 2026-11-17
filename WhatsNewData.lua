@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("!!LoadProfiler", {
 	title = "Load Profiler",
 	icon = "Interface\\Icons\\INV_Misc_PocketWatch_01",
-	version = "1.4.1",
+	version = "1.4.2",
 	seen = "LoadProfilerWhatsNew",
 	saved = { "LoadProfilerDB" },
 	changes = {
+		{ "1.4.2",
+			"Fixed: after you opened Load Profiler's options, the game's own options could show the error \"AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'\".",
+		},
 		{ "1.4.1",
 			"Fixed an error when opening the options during combat (\"tried to call the protected function 'OpenSettingsPanel()'\"). The options now open as soon as the fight ends.",
 		},
