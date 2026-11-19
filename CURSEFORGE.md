@@ -60,6 +60,8 @@ Load Profiler shows which addons make your loading screen slow and which ones ma
 
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
 
+This addon was made with AI.
+
 **Feedback and bug reports are welcome** in the comments.
 ```
 ---

@@ -56,3 +56,6 @@ Right-click the minimap button, type `/lp options`, or go to **Esc â†’ Options â
 - **Family totals add up their addons** with Group by family on, so a frame where two of them were slow counts twice.
 - **A play session is saved when you log out or `/reload`**, if it lasted at least a minute. Boss fights shorter than 10 seconds aren't saved.
 - **The game measures this, not Load Profiler.** If the game's addon performance measuring is turned off, the tab says so and records nothing.
+
+## Made with AI
+This addon was made with AI.
