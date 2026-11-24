@@ -219,7 +219,9 @@ events:SetScript("OnEvent", function(_, event, ...)
 		periods.boss = newPeriod("boss", type(name) == "string" and not isSecret(name) and name or nil)
 	elseif event == "ENCOUNTER_END" then
 		local success = select(5, ...)
-		if periods.boss then periods.boss.success = success == 1 or nil end
+		if periods.boss and not isSecret(success) and type(success) == "number" then
+			periods.boss.success = success == 1
+		end
 		finish("boss")
 	elseif event == "PLAYER_LOGOUT" then
 		finish("boss")
@@ -234,6 +236,11 @@ function Play.Start(rows)
 	started = true
 	watch(ADDON_NAME)
 	for _, r in ipairs(rows) do watch(r.n) end
+	if C_AddOns and C_AddOns.GetNumAddOns and C_AddOns.IsAddOnLoaded then
+		for i = 1, C_AddOns.GetNumAddOns() do
+			if C_AddOns.IsAddOnLoaded(i) then watch(C_AddOns.GetAddOnInfo(i)) end
+		end
+	end
 	periods.play = newPeriod("play")
 	for _, event in ipairs({ "ADDON_LOADED", "LOADING_SCREEN_ENABLED", "LOADING_SCREEN_DISABLED",
 		"ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_LOGOUT" }) do
@@ -248,7 +255,6 @@ end
 function Play.Recordings()
 	local list = {}
 	if periods.play then
-		if running then sample(frames) end
 		local live = snapshot(periods.play)
 		live.live = true
 		list[1] = live
