@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.3
+- Fixed: boss wipes are now recorded accurately as wipes instead of being left unmarked.
+- Fixed: opening the While playing tab repeatedly no longer skews each addon's rolling average frame time.
+- Fixed: addons that finished loading before Load Profiler are now tracked properly.
+
 ## 1.4.2
 - Fixed: after you opened Load Profiler's options, the game's own options could show the error "AddOn '!!LoadProfiler' tried to call the protected function 'IsUserOAuthed()'".
 
