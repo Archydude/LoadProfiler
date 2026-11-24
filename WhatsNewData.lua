@@ -2,10 +2,14 @@
 ArchdudeWhatsNew:Register("!!LoadProfiler", {
 	title = "Load Profiler",
 	icon = "Interface\\Icons\\INV_Misc_PocketWatch_01",
-	version = "1.4.3",
+	version = "1.4.4",
 	seen = "LoadProfilerWhatsNew",
 	saved = { "LoadProfilerDB" },
 	changes = {
+		{ "1.4.4",
+			"Fixed: addons loaded inside another addon's startup are now timed accurately without counting the inner addon's time against the outer one.",
+			"Fixed: addons loaded on demand after login are no longer double-counted in the login totals, and the window's tabs display cleanly across Classic versions.",
+		},
 		{ "1.4.3",
 			"Fixed: boss wipes are now recorded accurately as wipes instead of being left unmarked.",
 			"Fixed: opening the While playing tab repeatedly no longer skews each addon's rolling average frame time.",

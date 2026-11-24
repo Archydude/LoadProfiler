@@ -95,8 +95,8 @@ events:RegisterEvent("PLAYER_LOGIN")
 events:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 tail:RegisterEvent("ADDON_LOADED")
-tail:SetScript("OnEvent", function()
-	Measure.SetupDone(Measure.Now())
+tail:SetScript("OnEvent", function(_, _, name)
+	Measure.SetupDone(name, Measure.Now())
 end)
 events:SetScript("OnEvent", function(self, event, ...)
 	local now = Measure.Now()
@@ -112,6 +112,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 		Measure.Login(now)
 		MinimapButton.Create()
 		Options.Create()
+		Measure.Restart()
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		self:UnregisterAllEvents()
 		measuring = false

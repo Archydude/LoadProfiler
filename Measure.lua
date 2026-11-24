@@ -20,7 +20,7 @@ local lastMark = startTime    -- when the previous addon finished, or our own ha
 local lastAddonAt = startTime -- when the last addon finished loading
 local loginAt                 -- when PLAYER_LOGIN fired
 local rows = {}               -- this login's addons, in load order
-local current                 -- the row whose ADDON_LOADED handlers are still running
+local stack = {}              -- nested addons whose ADDON_LOADED handlers are still running
 
 local function round1(ms)
 	return math.floor(ms * 10 + 0.5) / 10
@@ -30,12 +30,13 @@ end
 function Measure.AddonLoaded(name, now)
 	-- t = when it finished (ms since we started); late = loaded after PLAYER_LOGIN,
 	-- in which case the gap before it also covers the game's own world loading.
-	current = {
+	local row = {
 		n = name, ms = now - lastMark, t = round1(now - startTime),
 		b = name:find("^Blizzard_") and true or nil, late = loginAt and true or nil,
 	}
-	rows[#rows + 1] = current
-	lastAddonAt = now
+	stack[#stack + 1] = row
+	rows[#rows + 1] = row
+	if not loginAt then lastAddonAt = now end
 end
 
 -- Restarts the clock after our own event handler, so its cost isn't counted.
@@ -46,10 +47,14 @@ end
 -- Every other ADDON_LOADED handler has run. That's mostly the addon setting
 -- itself up now that it's loaded, so the time counts on it; otherwise it would
 -- land on the next addon to load.
-function Measure.SetupDone(now)
-	if current then
-		current.ms = current.ms + (now - lastMark)
-		current = nil
+function Measure.SetupDone(name, now)
+	if type(name) == "number" and now == nil then name, now = nil, name end
+	for i = #stack, 1, -1 do
+		if not name or stack[i].n == name then
+			local row = table.remove(stack, i)
+			row.ms = row.ms + (now - lastMark)
+			break
+		end
 	end
 	lastMark = clock()
 end
@@ -71,7 +76,10 @@ function Measure.Finish(now, isInitialLogin, isReload)
 			local ok, kb = pcall(getMem, r.n)
 			if ok and kb then r.kb = math.floor(kb) end
 		end
-		if r.b then blizzMs = blizzMs + r.ms else addonMs = addonMs + r.ms end
+		if not r.late then
+			if r.b then blizzMs = blizzMs + r.ms else addonMs = addonMs + r.ms end
+		end
+		r.late = nil
 		r.ms = round1(r.ms)
 	end
 

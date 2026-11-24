@@ -229,7 +229,6 @@ local function getRow(i)
 		row:SetScript("OnClick", function(self)
 			Switch.Toggle(self.entry)
 			Window.Refresh()
-			showTooltip(self)
 		end)
 		row:SetScript("OnEnter", showTooltip)
 		row:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -399,12 +398,12 @@ end
 
 -- The tab template draws its text small; keep it at the window's text size.
 local function selectTab(f, index)
-	PanelTemplates_SetTab(f, index)
+	if PanelTemplates_SetTab then PanelTemplates_SetTab(f, index) end
 	for _, tab in ipairs(f.tabs) do
 		tab:SetNormalFontObject(GameFontNormal)
 		tab:SetHighlightFontObject(GameFontHighlight)
 		tab:SetDisabledFontObject(GameFontHighlight)
-		PanelTemplates_TabResize(tab, 0)
+		if PanelTemplates_TabResize then PanelTemplates_TabResize(tab, 0) end
 	end
 end
 
@@ -505,15 +504,20 @@ local function create()
 	f.hint:SetWordWrap(false)
 
 	-- Tabs under the window. Named, since older clients find tabs by name.
+	local modern = C_XMLUtil and C_XMLUtil.GetTemplateInfo and C_XMLUtil.GetTemplateInfo("PanelTabButtonTemplate") ~= nil
+	local template = modern and "PanelTabButtonTemplate" or "CharacterFrameTabButtonTemplate"
 	f.tabs = {}
 	for i, v in ipairs(views) do
-		local tab = CreateFrame("Button", "LoadProfilerFrameTab" .. i, f, "PanelTabButtonTemplate")
+		local tab = CreateFrame("Button", "LoadProfilerFrameTab" .. i, f, template)
 		tab:SetID(i)
+		if not modern then tab:SetScript("OnShow", nil) end
 		tab:SetText(v.tab)
 		if i == 1 then
-			tab:SetPoint("TOPLEFT", f, "BOTTOMLEFT", 12, 2)
-		else
+			tab:SetPoint("TOPLEFT", f, "BOTTOMLEFT", modern and 12 or 11, modern and 2 or 3)
+		elseif modern then
 			tab:SetPoint("LEFT", f.tabs[i - 1], "RIGHT", 4, 0)
+		else
+			tab:SetPoint("LEFT", f.tabs[i - 1], "RIGHT", -19, 0)
 		end
 		tab:SetScript("OnClick", function()
 			PlaySound(SOUNDKIT.IG_CHARACTER_INFO_TAB)
@@ -521,7 +525,7 @@ local function create()
 		end)
 		f.tabs[i] = tab
 	end
-	PanelTemplates_SetNumTabs(f, #views)
+	if PanelTemplates_SetNumTabs then PanelTemplates_SetNumTabs(f, #views) end
 	selectTab(f, mode)
 
 	-- Redraw the session in progress while it's on screen.
